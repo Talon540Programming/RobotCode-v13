@@ -374,7 +374,7 @@ public class Robot extends TimedRobot {
     drive();
     shooter();
     index();
-    climb();
+    //climb();
     wrist();
     intake();
   }
@@ -394,20 +394,20 @@ public class Robot extends TimedRobot {
     if (Math.abs(left) < 0.2) {
       left = 0;
     }
-    setMotors(left, right);
+    setMotors(left/2, right/2);
   }
 
   /**
    * The method for shooting in teleop
    */
   public void shooter() {
-    if(xbox.getLeftBumper()) { // LB Button
+    if(leftJoy.getTrigger()) { // LB Button
        shooterTransition.set(ControlMode.PercentOutput, -0.5);
     } else {
       shooterTransition.set(ControlMode.PercentOutput, 0);
     }
 
-    if (xbox.getRightBumper()) { // RB Button
+    if (rightJoy.getTrigger()) { // RB Button
       shooterFly1.set(ControlMode.PercentOutput, -0.8);
       shooterFly2.set(ControlMode.PercentOutput, -0.8);
     } else {
@@ -420,8 +420,8 @@ public class Robot extends TimedRobot {
    * Operates the index motors
    */
   private void index() {
-    if(Math.abs(xbox.getRightY()) > 0.2) { 
-      index.set(ControlMode.PercentOutput, xbox.getRightY());
+    if((rightJoy.getRawButton(3))) { 
+      index.set(ControlMode.PercentOutput, 0.5);
     } else {
       index.set(ControlMode.PercentOutput, 0);
     }
@@ -429,16 +429,6 @@ public class Robot extends TimedRobot {
   
   /**
    * Operates the climber motor
-   */
-  public void climb() {
-    if (xbox.getLeftTriggerAxis() > 0.2) { // Left Trigger
-      climb.set(ControlMode.PercentOutput, -xbox.getLeftTriggerAxis());
-    } else if (xbox.getRightTriggerAxis() > 0.2) { // Right Trigger
-      climb.set(ControlMode.PercentOutput, (xbox.getRightTriggerAxis()/2)+0.5);
-    } else {
-      climb.set(ControlMode.PercentOutput, 0);
-    }
-
     if (xbox.getAButton()) {
       //wench.set(ControlMode.PercentOutput, 0.75);
     } else {
@@ -450,9 +440,9 @@ public class Robot extends TimedRobot {
     * Used to change the position of the wrist
     */
   public void wrist() {
-		if (xbox.getYButton()) { // Raise wrist
+		if (leftJoy.getRawButton(4)) { // Raise wrist
       wrist.set(ControlMode.PercentOutput, 0.75);
-		} else if (xbox.getBButton()) { // Lower wrist
+		} else if (leftJoy.getRawButton(3)) { // Lower wrist
 			wrist.set(ControlMode.PercentOutput, -0.4);
 		}	else {
 			wrist.set(ControlMode.PercentOutput, 0);
@@ -463,11 +453,14 @@ public class Robot extends TimedRobot {
    * Operates the intake motors using the y-axis of the right joystick
    */
   private void intake() {
-	  if (Math.abs(xbox.getLeftY()) > 0.2) { // deadzone
-		  rollers.set(ControlMode.PercentOutput, xbox.getLeftY());
-	  } else {
+	  if (rightJoy.getRawButton(4)) { // deadzone
+		  rollers.set(ControlMode.PercentOutput, 0.5);
+    } 
+    else if(rightJoy.getRawButton(5)) {
+      rollers.set(ControlMode.PercentOutput, -0.5);
+    }
+    else {
 	    rollers.set(ControlMode.PercentOutput, 0);
 	  }
   }
 }
-
