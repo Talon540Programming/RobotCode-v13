@@ -1,13 +1,13 @@
 package frc.robot.shooter.commands.control;
 
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.constants.RobotConfig;
 import frc.robot.shooter.ShooterBase;
-import org.talon540.control.AttackJoystick.TalonJoystick;
 
 public class AttackJoystickShooterControl extends ShooterControl {
-    private final TalonJoystick leftJoystick, rightJoystick;
+    private final CommandJoystick leftJoystick, rightJoystick;
 
-    public AttackJoystickShooterControl(ShooterBase shooterBase, TalonJoystick leftJoystick, TalonJoystick rightJoystick) {
+    public AttackJoystickShooterControl(ShooterBase shooterBase, CommandJoystick leftJoystick, CommandJoystick rightJoystick) {
         super(shooterBase);
 
         this.leftJoystick = leftJoystick;
@@ -16,8 +16,8 @@ public class AttackJoystickShooterControl extends ShooterControl {
 
     @Override
     public void execute() {
-        this.kFlywheelPercent = rightJoystick.buttons.TRIGGER.get() ? RobotConfig.kShooterPercent : 0;
-        this.kKickupPercent = leftJoystick.buttons.TRIGGER.get() ? RobotConfig.kKickupPercent : 0;
+        this.kFlywheelPercent = rightJoystick.getHID().getTrigger() ? RobotConfig.kShooterPercent : 0;
+        this.kKickupPercent = leftJoystick.getHID().getTrigger() ? RobotConfig.kKickupPercent : 0;
         super.execute();
     }
 }

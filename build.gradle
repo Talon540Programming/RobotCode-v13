@@ -1,33 +1,21 @@
+import edu.wpi.first.gradlerio.GradleRIOPlugin
+
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2022.2.1"
+    id "edu.wpi.first.GradleRIO" version '2023.1.1'
+    id 'com.diffplug.spotless' version '6.12.0'
 }
-
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
 
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
-// Define my targets (RoboRIO) and artifacts (deployable files)
-// This is added by GradleRIO's backing project DeployUtils.
 deploy {
     targets {
         roborio(getTargetTypeClass('RoboRIO')) {
-            // Team number is loaded either from the .wpilib/wpilib_preferences.json
-            // or from command line. If not found an exception will be thrown.
-            // You can use getTeamOrDefault(team) instead of getTeamNumber if you
-            // want to store a team number in this file.
-            team = project.frc.getTeamNumber()
+            team = project.frc.getTeamOrDefault(540)
             debug = project.frc.getDebugOrDefault(false)
 
             artifacts {
-                // First part is artifact name, 2nd is artifact type
-                // getTargetTypeClass is a shortcut to get the class type using a string
-
-                frcJava(getArtifactTypeClass('FRCJavaArtifact')) {
-                }
-
-                // Static files artifact
+                frcJava(getArtifactTypeClass('FRCJavaArtifact')) {}
                 frcStaticFileDeploy(getArtifactTypeClass('FileTreeArtifact')) {
                     files = project.fileTree('src/main/deploy')
                     directory = '/home/lvuser/deploy'
@@ -39,16 +27,16 @@ deploy {
 
 def deployArtifact = deploy.targets.roborio.artifacts.frcJava
 
-// Set to true to use debug for JNI.
 wpi.java.debugJni = false
 
-// Set this to true to enable desktop support.
 def includeDesktopSupport = false
 
-
 repositories {
-    maven { url = uri('https://jitpack.io') }
+    mavenLocal()
+    mavenCentral()
 
+    maven { url = uri('https://jitpack.io') }
+    maven { url = uri('https://frcmaven.wpi.edu/artifactory/release/') }
     maven { url = uri('https://maven.ctr-electronics.com/release/') }
     maven { url = uri('https://maven.revrobotics.com/') }
     maven { url = uri("https://repo1.maven.org/maven2/") }
@@ -56,8 +44,6 @@ repositories {
     maven { url = uri("https://maven.photonvision.org/repository/snapshots") }
 }
 
-// Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
-// Also defines JUnit 4.
 dependencies {
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
@@ -76,32 +62,26 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
 
-    implementation 'com.ctre.phoenix:api-java:5.21.1'
-    implementation 'com.ctre.phoenix:wpiapi-java:5.21.1'
-
-    implementation 'com.revrobotics.frc:REVLib-java:2022.1.0'
-
-    implementation 'com.kauailabs.navx.frc:navx-java:4.0.447'
-
-    implementation 'org.photonvision:PhotonLib-java:v2023.1.1-beta-6'
-    implementation 'org.photonvision:PhotonTargeting-java:v2023.1.1-beta-6'
-
-    implementation "com.github.Talon540Programming:TalonLib:2022.4.1-SNAPSHOT"
-
+    implementation "com.ctre.phoenix:api-java:${phoniexVersion}"
+    implementation "com.ctre.phoenix:wpiapi-java:${phoniexVersion}"
+    implementation "com.revrobotics.frc:REVLib-java:${revVersion}"
+    implementation "org.photonvision:PhotonLib-java:${photonVisionVersion}"
+    implementation "org.photonvision:PhotonTargeting-java:${photonVisionVersion}"
+    implementation "com.github.Talon540Programming:TalonLib:${talonlibVersion}"
 }
 
-// Simulation configuration (e.g. environment variables).
 wpi.sim.addGui().defaultEnabled = true
 wpi.sim.addDriverstation()
 
-// Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
-// in order to make them all available at runtime. Also adding the manifest so WPILib
-// knows where to look for our Robot Class.
 jar {
-    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    manifest GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
@@ -109,3 +89,46 @@ jar {
 deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
+
+spotless {
+    java {
+        target fileTree('.') {
+            include '**/*.java'
+            exclude '**/build/**', '**/build-*/**', '.idea'
+        }
+        toggleOffOn()
+        googleJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    groovyGradle {
+        target fileTree('.') {
+            include '**/*.gradle'
+            exclude '**/build/**', '**/build-*/**', '.idea'
+        }
+        greclipse()
+        indentWithSpaces(4)
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    format 'xml', {
+        target fileTree('.') {
+            include '**/*.xml'
+            exclude '**/build/**', '**/build-*/**', '.idea'
+        }
+        eclipseWtp('xml')
+        trimTrailingWhitespace()
+        indentWithSpaces(2)
+        endWithNewline()
+    }
+    format 'misc', {
+        target fileTree('.') {
+            include '**/*.md', '**/.gitignore'
+            exclude '**/build/**', '**/build-*/**', '.idea'
+        }
+        trimTrailingWhitespace()
+        indentWithSpaces(2)
+        endWithNewline()
+    }
+}

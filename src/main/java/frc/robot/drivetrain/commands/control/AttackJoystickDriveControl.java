@@ -1,13 +1,13 @@
 package frc.robot.drivetrain.commands.control;
 
-import frc.robot.constants.RobotConfig;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.drivetrain.DrivetrainBase;
-import org.talon540.control.AttackJoystick.TalonJoystick;
 
 public class AttackJoystickDriveControl extends DriveControl {
-    private final TalonJoystick leftJoystick, rightJoystick;
+    private final CommandJoystick leftJoystick, rightJoystick;
 
-    public AttackJoystickDriveControl(DrivetrainBase drivetrainBase, TalonJoystick left, TalonJoystick right) {
+    public AttackJoystickDriveControl(DrivetrainBase drivetrainBase, CommandJoystick left, CommandJoystick right) {
         super(drivetrainBase);
 
         this.leftJoystick = left;
@@ -16,8 +16,8 @@ public class AttackJoystickDriveControl extends DriveControl {
 
     @Override
     public void execute() {
-        super.kLeftDrivePercent = leftJoystick.getDeadbandY();
-        super.kRightDrivePercent = rightJoystick.getDeadbandY();
+        super.kLeftDrivePercent = MathUtil.applyDeadband(leftJoystick.getY(), 0.2);
+        super.kRightDrivePercent = MathUtil.applyDeadband(rightJoystick.getY(), 0.2);
         super.execute();
     }
 }
