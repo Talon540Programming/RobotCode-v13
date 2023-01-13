@@ -48,6 +48,12 @@ def includeDesktopSupport = false
 
 repositories {
     maven { url = uri('https://jitpack.io') }
+
+    maven { url = uri('https://maven.ctr-electronics.com/release/') }
+    maven { url = uri('https://maven.revrobotics.com/') }
+    maven { url = uri("https://repo1.maven.org/maven2/") }
+    maven { url = uri("https://maven.photonvision.org/repository/internal") }
+    maven { url = uri("https://maven.photonvision.org/repository/snapshots") }
 }
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
@@ -72,7 +78,18 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 
+    implementation 'com.ctre.phoenix:api-java:5.21.1'
+    implementation 'com.ctre.phoenix:wpiapi-java:5.21.1'
+
+    implementation 'com.revrobotics.frc:REVLib-java:2022.1.0'
+
+    implementation 'com.kauailabs.navx.frc:navx-java:4.0.447'
+
+    implementation 'org.photonvision:PhotonLib-java:v2023.1.1-beta-6'
+    implementation 'org.photonvision:PhotonTargeting-java:v2023.1.1-beta-6'
+
     implementation "com.github.Talon540Programming:TalonLib:2022.4.1-SNAPSHOT"
+
 }
 
 // Simulation configuration (e.g. environment variables).
