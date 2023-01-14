@@ -11,27 +11,29 @@ import frc.robot.shooter.ShooterBase;
 import frc.robot.shooter.commands.control.AttackJoystickShooterControl;
 import org.talon540.control.XboxController.TalonXboxController;
 
-
 public class RobotContainer {
-    private final CommandJoystick leftJoystick = new CommandJoystick(RobotMap.kLeftJoystickPort);
-    private final CommandJoystick rightJoystick = new CommandJoystick(RobotMap.kRightJoystickPort);
-    private final TalonXboxController xboxController = new TalonXboxController(RobotMap.kXboxControllerPort);
+  private final CommandJoystick leftJoystick = new CommandJoystick(RobotMap.kLeftJoystickPort);
+  private final CommandJoystick rightJoystick = new CommandJoystick(RobotMap.kRightJoystickPort);
+  private final TalonXboxController xboxController =
+      new TalonXboxController(RobotMap.kXboxControllerPort);
 
-    // Subsystems
-    private final DrivetrainBase drivetrainBase = new DrivetrainBase();
-    private final ShooterBase shooterBase = new ShooterBase();
-    private final IntakeBase intakeBase = new IntakeBase();
+  // Subsystems
+  private final DrivetrainBase drivetrainBase = new DrivetrainBase();
+  private final ShooterBase shooterBase = new ShooterBase();
+  private final IntakeBase intakeBase = new IntakeBase();
 
+  public RobotContainer() {
+    DriverStation.silenceJoystickConnectionWarning(true);
 
-    public RobotContainer() {
-        DriverStation.silenceJoystickConnectionWarning(true);
+    configureBindings();
+  }
 
-        configureBindings();
-    }
-
-    private void configureBindings() {
-        drivetrainBase.setDefaultCommand(new AttackJoystickDriveControl(drivetrainBase, leftJoystick, rightJoystick));
-        shooterBase.setDefaultCommand(new AttackJoystickShooterControl(shooterBase, leftJoystick, rightJoystick));
-        intakeBase.setDefaultCommand(new AttackJoystickIntakeControl(intakeBase, leftJoystick, rightJoystick));
-    }
+  private void configureBindings() {
+    drivetrainBase.setDefaultCommand(
+        new AttackJoystickDriveControl(drivetrainBase, leftJoystick, rightJoystick));
+    shooterBase.setDefaultCommand(
+        new AttackJoystickShooterControl(shooterBase, leftJoystick, rightJoystick));
+    intakeBase.setDefaultCommand(
+        new AttackJoystickIntakeControl(intakeBase, leftJoystick, rightJoystick));
+  }
 }
