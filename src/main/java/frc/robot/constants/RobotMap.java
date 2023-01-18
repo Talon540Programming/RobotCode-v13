@@ -17,5 +17,4 @@ public class RobotMap {
 
   public static final int kLeftJoystickPort = 0;
   public static final int kRightJoystickPort = 1;
-  public static final int kXboxControllerPort = 2;
 }

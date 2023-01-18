@@ -2,7 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.constants.RobotMap;
 import frc.robot.drivetrain.DrivetrainBase;
 import frc.robot.drivetrain.commands.control.AttackJoystickDriveControl;
