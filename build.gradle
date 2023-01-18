@@ -45,19 +45,6 @@ wpi.java.debugJni = false
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-
-    maven { url = uri('https://jitpack.io') }
-    maven { url = uri('https://frcmaven.wpi.edu/artifactory/release/') }
-    maven { url = uri('https://maven.ctr-electronics.com/release/') }
-    maven { url = uri('https://maven.revrobotics.com/') }
-    maven { url = uri("https://repo1.maven.org/maven2/") }
-    maven { url = uri("https://maven.photonvision.org/repository/internal") }
-    maven { url = uri("https://maven.photonvision.org/repository/snapshots") }
-}
-
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 5.
 dependencies {
@@ -81,13 +68,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-
-    implementation "com.ctre.phoenix:api-java:${phoniexVersion}"
-    implementation "com.ctre.phoenix:wpiapi-java:${phoniexVersion}"
-    implementation "com.revrobotics.frc:REVLib-java:${revVersion}"
-    implementation "org.photonvision:PhotonLib-java:${photonVisionVersion}"
-    implementation "org.photonvision:PhotonTargeting-java:${photonVisionVersion}"
-    implementation "com.github.Talon540Programming:TalonLib:${talonlibVersion}"
 }
 
 test {
