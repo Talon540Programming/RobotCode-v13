@@ -5,6 +5,7 @@ package frc.robot.constants;
  * are retired to outreach.
  */
 public class RobotConfig {
+  public static final double kDrivetrainJoystickDeadband = 0.05;
   public static final double kShooterPercent = -0.8;
   public static final double kKickupPercent = -0.5;
   public static final double kIndexPercent = 0.5;

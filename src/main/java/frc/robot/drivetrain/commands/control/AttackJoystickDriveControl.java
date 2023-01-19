@@ -2,6 +2,7 @@ package frc.robot.drivetrain.commands.control;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import frc.robot.constants.RobotConfig;
 import frc.robot.drivetrain.DrivetrainBase;
 
 public class AttackJoystickDriveControl extends DriveControl {
@@ -17,8 +18,9 @@ public class AttackJoystickDriveControl extends DriveControl {
 
   @Override
   public void execute() {
-    super.kLeftDrivePercent = MathUtil.applyDeadband(leftJoystick.getY(), 0.05);
-    super.kRightDrivePercent = MathUtil.applyDeadband(rightJoystick.getY(), 0.05);
+    this.kLeftDrivePercent = MathUtil.applyDeadband(leftJoystick.getY(), RobotConfig.kDrivetrainJoystickDeadband);
+    this.kRightDrivePercent = MathUtil.applyDeadband(rightJoystick.getY(), RobotConfig.kDrivetrainJoystickDeadband);
+
     super.execute();
   }
 }
