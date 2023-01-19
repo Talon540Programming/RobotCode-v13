@@ -19,6 +19,7 @@ public class AttackJoystickShooterControl extends ShooterControl {
   public void execute() {
     this.kFlywheelPercent = rightJoystick.getHID().getTrigger() ? RobotConfig.kShooterPercent : 0;
     this.kKickupPercent = leftJoystick.getHID().getTrigger() ? RobotConfig.kKickupPercent : 0;
+
     super.execute();
   }
 }
