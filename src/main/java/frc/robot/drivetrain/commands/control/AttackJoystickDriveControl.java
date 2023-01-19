@@ -17,8 +17,8 @@ public class AttackJoystickDriveControl extends DriveControl {
 
   @Override
   public void execute() {
-    super.kLeftDrivePercent = MathUtil.applyDeadband(leftJoystick.getY(), 0.2);
-    super.kRightDrivePercent = MathUtil.applyDeadband(rightJoystick.getY(), 0.2);
+    super.kLeftDrivePercent = MathUtil.applyDeadband(leftJoystick.getY(), 0.05);
+    super.kRightDrivePercent = MathUtil.applyDeadband(rightJoystick.getY(), 0.05);
     super.execute();
   }
 }
