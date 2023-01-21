@@ -5,6 +5,12 @@ package frc.robot.constants;
  * are retired to outreach.
  */
 public class RobotConfig {
+  public static final Constants.ControlMode controlMode = Constants.ControlMode.JOYSTICKS;
+
+  public static final int kLeftJoystickPort = 0;
+  public static final int kRightJoystickPort = 1;
+  public static final int kXboxControllerPort = 2;
+
   public static final double kDrivetrainJoystickDeadband = 0.05;
   public static final double kShooterPercent = -0.8;
   public static final double kKickupPercent = -0.5;
