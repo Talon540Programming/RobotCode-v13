@@ -2,7 +2,6 @@ package frc.robot.intake.commands.control;
 
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.constants.RobotConfig;
-import frc.robot.drivetrain.DrivetrainBase;
 import frc.robot.intake.IntakeBase;
 
 public class XboxControllerIntakeControl extends IntakeControl {
