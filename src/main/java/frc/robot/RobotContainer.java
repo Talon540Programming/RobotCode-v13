@@ -10,8 +10,10 @@ import frc.robot.drivetrain.commands.control.AttackJoystickDriveControl;
 import frc.robot.drivetrain.commands.control.XboxControllerDriveControl;
 import frc.robot.intake.IntakeBase;
 import frc.robot.intake.commands.control.AttackJoystickIntakeControl;
+import frc.robot.intake.commands.control.XboxControllerIntakeControl;
 import frc.robot.shooter.ShooterBase;
 import frc.robot.shooter.commands.control.AttackJoystickShooterControl;
+import frc.robot.shooter.commands.control.XboxControllerShooterControl;
 
 public class RobotContainer {
   private final CommandJoystick leftJoystick = new CommandJoystick(RobotConfig.kLeftJoystickPort);
@@ -40,6 +42,12 @@ public class RobotContainer {
                     new AttackJoystickIntakeControl(intakeBase, leftJoystick, rightJoystick));
             break;
         case XBOX:
+            drivetrainBase.setDefaultCommand(
+                    new XboxControllerDriveControl(drivetrainBase, xboxController));
+            shooterBase.setDefaultCommand(
+                    new XboxControllerShooterControl(shooterBase, xboxController));
+            intakeBase.setDefaultCommand(
+                    new XboxControllerIntakeControl(intakeBase, xboxController));
             break;
     }
   }
