@@ -3,11 +3,14 @@ package frc.robot.drivetrain;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.RobotConfig;
 import frc.robot.constants.Constants.HardwareIDs;
 
 public class DrivetrainBase extends SubsystemBase {
   private final MotorControllerGroup left;
   private final MotorControllerGroup right;
+
+  private double kMaxOutput = RobotConfig.kMaxDrivetrainPercent;
 
   public DrivetrainBase() {
     WPI_TalonFX frontLeft = new WPI_TalonFX(HardwareIDs.kDrivetrainFrontLeft);
@@ -22,7 +25,7 @@ public class DrivetrainBase extends SubsystemBase {
   }
 
   public void setPercent(double leftPercent, double rightPercent) {
-    this.left.set(leftPercent);
-    this.right.set(rightPercent);
+    this.left.set(leftPercent * kMaxOutput);
+    this.right.set(rightPercent * kMaxOutput);
   }
 }

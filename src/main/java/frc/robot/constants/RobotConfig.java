@@ -17,4 +17,5 @@ public class RobotConfig {
   public static final double kIndexPercent = 0.5;
   public static final double kIntakeForwardPercent = 0.5;
   public static final double kIntakeReversePercent = -0.5;
+  public static final double kMaxDrivetrainPercent = 1.0;
 }
