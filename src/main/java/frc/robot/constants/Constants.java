@@ -7,8 +7,8 @@ public class Constants {
   }
 
   public static class HardwareIDs {
-    public static final int kDrivetrainFrontRight = 10;
-    public static final int kDrivetrainBackRight = 11;
+    public static final int kDrivetrainFrontRight = 11;
+    public static final int kDrivetrainBackRight = 10;
     public static final int kDrivetrainFrontLeft = 8;
     public static final int kDrivetrainBackLeft = 9;
 
