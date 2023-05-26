@@ -1,24 +1,44 @@
 package frc.robot.shooter;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.Constants.HardwareIDs;
+import org.littletonrobotics.junction.Logger;
 
 public class ShooterBase extends SubsystemBase {
-  private final TalonSRX shooterLeader = new TalonSRX(HardwareIDs.kShooterFlyLeader);
-  private final TalonSRX shooterFollower = new TalonSRX(HardwareIDs.kShooterFlyFollower);
-  private final TalonSRX kickup = new TalonSRX(HardwareIDs.kKickupWheel);
+  private final ShooterIO m_shooterIO;
+  private final ShooterInputsAutoLogged m_shooterInputs = new ShooterInputsAutoLogged();
 
-  public ShooterBase() {
-    this.shooterFollower.follow(shooterLeader);
+  public ShooterBase(ShooterIO shooterIO) {
+    m_shooterIO = shooterIO;
   }
 
-  public void setFlywheelPercent(double percent) {
-    this.shooterLeader.set(ControlMode.PercentOutput, percent);
+  @Override
+  public void periodic() {
+    m_shooterIO.updateInputs(m_shooterInputs);
+    Logger.getInstance().processInputs("Shooter", m_shooterInputs);
+  }
+
+  public void setShooterPercent(double percent) {
+    percent = MathUtil.clamp(percent, -1.0, 1.0);
+
+    setShooterVoltage(percent * 12.0);
+  }
+
+  public void setShooterVoltage(double voltage) {
+    voltage = MathUtil.clamp(voltage, -12.0, 12.0);
+
+    m_shooterIO.setShooterVoltage(voltage);
   }
 
   public void setKickupPercent(double percent) {
-    this.kickup.set(ControlMode.PercentOutput, percent);
+    percent = MathUtil.clamp(percent, -1.0, 1.0);
+
+    setKickupVoltage(percent * 12.0);
+  }
+
+  public void setKickupVoltage(double voltage) {
+    voltage = MathUtil.clamp(voltage, -12.0, 12.0);
+
+    m_shooterIO.setKickupVoltage(voltage);
   }
 }
