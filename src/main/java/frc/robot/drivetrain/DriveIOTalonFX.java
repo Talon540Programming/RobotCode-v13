@@ -4,12 +4,7 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.SerialPort;
 import frc.lib.TalonFXMechanism;
 
 public class DriveIOTalonFX implements DriveIO {
@@ -21,7 +16,6 @@ public class DriveIOTalonFX implements DriveIO {
   private final TalonFXMechanism m_leftEncoder;
   private final TalonFXMechanism m_rightEncoder;
 
-  private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
 
   public DriveIOTalonFX(
       int leftLeaderId,
@@ -63,8 +57,6 @@ public class DriveIOTalonFX implements DriveIO {
     m_leftFollower.setInverted(InvertType.FollowMaster);
     m_rightLeader.setInverted(rightSideInverted);
     m_rightFollower.setInverted(InvertType.FollowMaster);
-
-    m_gyro.calibrate();
   }
 
   @Override
@@ -74,7 +66,7 @@ public class DriveIOTalonFX implements DriveIO {
     inputs.LeftVelocityMetersPerSecond = m_leftEncoder.getVelocityMetersPerSecond();
     inputs.RightVelocityMetersPerSecond = m_rightEncoder.getVelocityMetersPerSecond();
 
-    inputs.TemperatureCelcius =
+    inputs.TemperatureCelsius =
         new double[] {
           m_leftLeader.getTemperature(), m_leftFollower.getTemperature(),
           m_rightLeader.getTemperature(), m_rightFollower.getTemperature(),
@@ -85,11 +77,6 @@ public class DriveIOTalonFX implements DriveIO {
           m_leftLeader.getSupplyCurrent(), m_leftFollower.getSupplyCurrent(),
           m_rightLeader.getSupplyCurrent(), m_rightFollower.getSupplyCurrent(),
         };
-
-    inputs.GyroConnected = m_gyro.isConnected();
-
-    inputs.YawPositionRad = -m_gyro.getAngle();
-    inputs.YawRateRadPerSecond = m_gyro.getRate();
   }
 
   @Override
@@ -105,15 +92,5 @@ public class DriveIOTalonFX implements DriveIO {
   public void resetEncoders() {
     m_leftEncoder.resetPosition(0);
     m_rightEncoder.resetPosition(0);
-  }
-
-  @Override
-  public void resetHeading() {
-    m_gyro.reset();
-  }
-
-  @Override
-  public Rotation2d getHeading() {
-    return m_gyro.getRotation2d();
   }
 }

@@ -10,31 +10,18 @@ public class DriveBase extends SubsystemBase {
   private final DriveIO m_driveIO;
   private final DriveInputsAutoLogged m_driveInputs = new DriveInputsAutoLogged();
 
-  private final DifferentialDriveOdometry m_odometry;
 
   public DriveBase(DriveIO driveIO) {
     m_driveIO = driveIO;
 
     m_driveIO.resetEncoders();
-    m_driveIO.resetHeading();
 
-    m_odometry = new DifferentialDriveOdometry(m_driveIO.getHeading(), 0, 0);
   }
 
   @Override
   public void periodic() {
     m_driveIO.updateInputs(m_driveInputs);
     Logger.getInstance().processInputs("Drive", m_driveInputs);
-
-    m_odometry.update(
-        m_driveIO.getHeading(),
-        m_driveInputs.LeftPositionMeters,
-        m_driveInputs.RightPositionMeters);
-    Logger.getInstance().recordOutput("Odometry", m_odometry.getPoseMeters());
-  }
-
-  public Pose2d getEstimatedPose() {
-    return m_odometry.getPoseMeters();
   }
 
   public void tankDrivePercent(double leftPercent, double rightPercent) {
