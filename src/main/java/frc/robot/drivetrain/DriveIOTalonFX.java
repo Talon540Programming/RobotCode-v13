@@ -16,7 +16,6 @@ public class DriveIOTalonFX implements DriveIO {
   private final TalonFXMechanism m_leftEncoder;
   private final TalonFXMechanism m_rightEncoder;
 
-
   public DriveIOTalonFX(
       int leftLeaderId,
       int leftFollowerId,

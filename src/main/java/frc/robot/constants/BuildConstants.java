@@ -1,8 +1,6 @@
 package frc.robot.constants;
 
-/**
- * Automatically generated file containing build version information.
- */
+/** Automatically generated file containing build version information. */
 public final class BuildConstants {
   public static final String MAVEN_GROUP = "";
   public static final String MAVEN_NAME = "13.0-whaterve";
@@ -15,5 +13,5 @@ public final class BuildConstants {
   public static final long BUILD_UNIX_TIME = 1682372273680L;
   public static final int DIRTY = 0;
 
-  private BuildConstants(){}
+  private BuildConstants() {}
 }

@@ -1,8 +1,6 @@
 package frc.robot.drivetrain;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.junction.Logger;
 
@@ -10,12 +8,10 @@ public class DriveBase extends SubsystemBase {
   private final DriveIO m_driveIO;
   private final DriveInputsAutoLogged m_driveInputs = new DriveInputsAutoLogged();
 
-
   public DriveBase(DriveIO driveIO) {
     m_driveIO = driveIO;
 
     m_driveIO.resetEncoders();
-
   }
 
   @Override
