@@ -35,7 +35,7 @@ public class RobotContainer {
 
     if (Constants.getRobotMode() != Constants.RobotMode.REPLAY) {
       switch (Constants.getRobotType()) {
-        case ROBOBT_2020C -> {
+        case ROBOT_2020C -> {
           m_driveBase =
               new DriveBase(
                   new DriveIOTalonFX(

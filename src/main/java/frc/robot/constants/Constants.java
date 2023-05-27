@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 
 public class Constants {
-  private static RobotType kRobotType = RobotType.ROBOBT_2020C;
+  private static RobotType kRobotType = RobotType.ROBOT_2020C;
   public static final double loopPeriodSecs = 0.02;
 
   public enum RobotMode {
@@ -16,20 +16,20 @@ public class Constants {
   }
 
   public enum RobotType {
-    ROBOBT_2020C,
+    ROBOT_2020C,
     ROBOT_SIMBOT
   }
 
   public static RobotType getRobotType() {
     if (RobotBase.isReal() && kRobotType == RobotType.ROBOT_SIMBOT) {
       DriverStation.reportError(
-          "Robot is set to SIM, but it is REAL, backing up to Competetion Type", false);
-      kRobotType = RobotType.ROBOBT_2020C;
+          "Robot is set to SIM, but it is REAL, backing up to Competition Type", false);
+      kRobotType = RobotType.ROBOT_2020C;
     }
 
     if (RobotBase.isSimulation() && kRobotType != RobotType.ROBOT_SIMBOT) {
       DriverStation.reportError(
-          "Robot is set to REAAL, but it is SIM, backing up to SIMBOT Type", false);
+          "Robot is set to REAL, but it is SIM, backing up to SIMBOT Type", false);
       kRobotType = RobotType.ROBOT_SIMBOT;
     }
 
@@ -38,7 +38,7 @@ public class Constants {
 
   public static RobotMode getRobotMode() {
     return switch (getRobotType()) {
-      case ROBOBT_2020C -> RobotBase.isReal() ? RobotMode.REAL : RobotMode.REPLAY;
+      case ROBOT_2020C -> RobotBase.isReal() ? RobotMode.REAL : RobotMode.REPLAY;
       case ROBOT_SIMBOT -> RobotMode.SIM;
     };
   }

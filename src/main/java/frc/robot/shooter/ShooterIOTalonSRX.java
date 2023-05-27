@@ -37,7 +37,7 @@ public class ShooterIOTalonSRX implements ShooterIO {
 
   @Override
   public void updateInputs(ShooterInputs inputs) {
-    inputs.TemperatureCelcius =
+    inputs.TemperatureCelsius =
         new double[] {
           m_leader.getTemperature(), m_follower.getTemperature(), m_kickup.getTemperature()
         };

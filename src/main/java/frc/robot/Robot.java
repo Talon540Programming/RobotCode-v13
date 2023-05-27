@@ -24,7 +24,7 @@ public class Robot extends LoggedRobot {
   public void robotInit() {
     Logger logger = Logger.getInstance();
 
-    LoggerUtil.initalizeLoggerMetadata(logger);
+    LoggerUtil.initializeLoggerMetadata(logger);
 
     switch (Constants.getRobotMode()) {
       case REAL -> {

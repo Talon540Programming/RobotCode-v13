@@ -6,7 +6,7 @@ import org.littletonrobotics.junction.AutoLog;
 public interface ShooterIO extends LoggedIO<ShooterIO.ShooterInputs> {
   @AutoLog
   public class ShooterInputs {
-    public double[] TemperatureCelcius = new double[] {};
+    public double[] TemperatureCelsius = new double[] {};
     public double[] CurrentAmps = new double[] {};
   }
 

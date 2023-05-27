@@ -25,7 +25,7 @@ public class IntakeIOTalonSRX implements IntakeIO {
 
   @Override
   public void updateInputs(IntakeInputs inputs) {
-    inputs.TemperatureCelcius =
+    inputs.TemperatureCelsius =
         new double[] {m_rollers.getTemperature(), m_indexer.getTemperature()};
     inputs.CurrentAmps = new double[] {m_rollers.getSupplyCurrent(), m_indexer.getSupplyCurrent()};
   }

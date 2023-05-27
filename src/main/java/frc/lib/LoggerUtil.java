@@ -12,9 +12,9 @@ public class LoggerUtil {
     // utility class
   }
 
-  public static void initalizeLoggerMetadata(Logger logger) {
+  public static void initializeLoggerMetadata(Logger logger) {
     logger.recordMetadata("ROBOT_NAME", Constants.getRobotType().toString());
-    logger.recordMetadata("RUNTIME_ENVIORMENT", RobotBase.getRuntimeType().toString());
+    logger.recordMetadata("RUNTIME_ENVIRONMENT", RobotBase.getRuntimeType().toString());
     logger.recordMetadata("PROJECT_NAME", BuildConstants.MAVEN_NAME);
     logger.recordMetadata("BUILD_DATE", BuildConstants.BUILD_DATE);
     logger.recordMetadata("GIT_SHA", BuildConstants.GIT_SHA);
@@ -22,15 +22,15 @@ public class LoggerUtil {
     logger.recordMetadata("GIT_BRANCH", BuildConstants.GIT_BRANCH);
 
     switch (BuildConstants.DIRTY) {
-      case 0 -> logger.recordMetadata("GIT_STATUS", "All changes are commited");
-      case 1 -> logger.recordMetadata("GIT_STATUS", "There are uncommited changes");
+      case 0 -> logger.recordMetadata("GIT_STATUS", "All changes are committed");
+      case 1 -> logger.recordMetadata("GIT_STATUS", "There are uncommitted changes");
       default -> logger.recordMetadata("GIT_STATUS", "Unknown Status");
     }
   }
 
   public static Optional<Path> getUSBPath() {
     try {
-      return Optional.of(Path.of("/u").toRealPath(null));
+      return Optional.of(Path.of("/u").toRealPath());
     } catch (Exception e) {
       return Optional.empty();
     }
